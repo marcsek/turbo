@@ -1,0 +1,6 @@
+{
+  "parserOptions": {
+    "project": ["./apps/client/tsconfig.json", "./tsconfig.node.json"]
+  },
+  "extends": ["custom"]
+}

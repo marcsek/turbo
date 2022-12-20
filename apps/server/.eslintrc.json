@@ -1,0 +1,7 @@
+{
+  "parserOptions": {
+    "project": ["./apps/server/tsconfig.json"]
+  },
+  "ignorePatterns": ["**/*.js"],
+  "extends": ["custom"]
+}
