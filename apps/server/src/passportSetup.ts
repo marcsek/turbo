@@ -12,9 +12,9 @@ const prisma = new PrismaClient();
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      callbackURL: 'trpc/auth.google.callback',
+      clientID: process.env.GOOGLE_CLIENT_ID ?? undefined,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? undefined,
+      callbackURL: 'http://localhost:3001/auth/google/callback',
     },
     async (_acessToken, _refreshToken, profile, done) => {
       let user;

@@ -3,6 +3,15 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
+      "env": [
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "ACCESS_PUBLIC_KEY",
+        "ACCESS_PRIVATE_KEY",
+        "REFRESH_PUBLIC_KEY",
+        "REFRESH_PRIVATE_KEY",
+        "PORT"
+      ],
       "outputs": ["dist/**", ".next/**"]
     },
     "lint": {

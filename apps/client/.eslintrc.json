@@ -1,6 +1,8 @@
 {
   "parserOptions": {
-    "project": ["./apps/client/tsconfig.json", "./tsconfig.node.json"]
+    "project": ["client/tsconfig.json", "./tsconfig.node.json"]
+    // "tsconfigRootDir": "./"
   },
+  "ignorePatterns": ["node_modules"],
   "extends": ["custom"]
 }

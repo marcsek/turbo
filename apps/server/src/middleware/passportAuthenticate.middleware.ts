@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server';
-import passport, { AuthenticateOptions, Strategy } from 'passport';
+import type { AuthenticateOptions, Strategy } from 'passport';
+import passport from 'passport';
 import { middleware } from '../trpc';
 
 export const passPortMiddleware = (strategy: string | string[] | Strategy, options: AuthenticateOptions) => {

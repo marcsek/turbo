@@ -1,8 +1,8 @@
 import Button from '@ui/Button';
 import Input from '@ui/Input';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import { trpc } from '../../utils/trpc';
+import AuthProviderButton from './AuthProviderButton';
 
 const LoginForm = () => {
   const [name, setName] = useState('');
@@ -23,6 +23,12 @@ const LoginForm = () => {
       <Button intent="primary" loading={hello.isLoading} onClick={handleLoading}>
         Login
       </Button>
+      <div className="relative h-0 w-full border-spacing-2 rounded border-b-2 border-dotted border-b-neutral-700">
+        <span className="absolute left-1/2 -translate-y-1.5 -translate-x-1/2 bg-neutral-900 px-3 text-base leading-none text-neutral-400">
+          Or
+        </span>
+      </div>
+      <AuthProviderButton />
     </div>
   );
 };

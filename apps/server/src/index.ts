@@ -1,4 +1,5 @@
-import express, { Express } from 'express';
+import type { Express } from 'express';
+import express from 'express';
 import { createContext } from './trpc';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import dotenv from 'dotenv';
@@ -8,7 +9,7 @@ import cors from 'cors';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import { appRouter } from './appRouter';
-import { googleRoute } from './routers/auth';
+import expressRouter, { googleRoute } from './routers/auth';
 import './passportSetup';
 
 const app: Express = express();
@@ -21,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/auth', googleRoute);
+app.use('/auth', expressRouter);
 app.use(
   '/trpc',
   trpcExpress.createExpressMiddleware({

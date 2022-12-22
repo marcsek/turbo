@@ -4,32 +4,36 @@ import { createAccessToken } from '../jwt';
 import { publicProcedure, router } from '../trpc';
 import { passPortMiddleware } from '../middleware/passportAuthenticate.middleware';
 import { z } from 'zod';
-import { TRPCError } from '@trpc/server';
 
 const expressRouter = Router();
-export const googleRoute = expressRouter.get('/google', passport.authenticate('google', { scope: ['profile'], session: false }));
+export const googleRoute = expressRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }));
+export const succesRoute = expressRouter.get('/sucess', (req, res) => {
+  res.send('Success hihi');
+});
+export const callback = expressRouter.get(
+  '/google/callback',
+  passport.authenticate('google', { session: false, successRedirect: 'http://localhost:5173/login/sucess' }),
+  (req, res) => {
+    const user = req.user;
+
+    if (user) {
+      console.log(user);
+      const accessToken = createAccessToken({ userId: user }, { expiresIn: '1h' });
+
+      res.cookie('jit', accessToken, {
+        maxAge: 3_600_000,
+        httpOnly: true,
+        secure: false,
+      });
+
+      res.send('parada');
+    }
+  }
+);
+
+export default expressRouter;
 
 export const authRouter = router({
-  google: router({
-    callback: publicProcedure.use(passPortMiddleware('google', { scope: ['profile'], session: false })).query((req) => {
-      const user = req.ctx.user;
-
-      if (user) {
-        console.log('tutok', req.ctx.req.user);
-
-        const accessToken = createAccessToken({ userId: user }, { expiresIn: '1h' });
-
-        req.ctx.res.cookie('jit', accessToken, {
-          maxAge: 3_600_000,
-          httpOnly: true,
-          secure: false,
-        });
-
-        return 'success';
-      }
-    }),
-  }),
-
   login: publicProcedure
     .use(passPortMiddleware('local', { session: false }))
     .input(z.object({ username: z.string(), password: z.string() }))
